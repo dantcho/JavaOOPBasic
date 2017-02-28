@@ -9,6 +9,7 @@ class Topping {
         setWeight(weight, modifier);
     }
 
+    public double calculateCalories() {
 
         double calories = 1;
         switch (this.getModifier()) {
@@ -25,6 +26,7 @@ class Topping {
                 calories *= 0.8;
                 break;
         }
+        return 2 * calories * this.getWeight();
     }
 
     private TopicModifiers getModifier() {

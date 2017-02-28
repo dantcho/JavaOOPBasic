@@ -23,6 +23,7 @@ class Dough {
         this.addModifiers(modifiers);
     }
 
+    public double calculateCalories() {
         double calories = 1;
         for (DoughModifiers modifier : getModifiers()) {
             switch (modifier) {
@@ -44,6 +45,7 @@ class Dough {
             }
         }
         calories *= 2 * this.getWeight(); //Calories from dough weight
+        return calories;
     }
 
 
