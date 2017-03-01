@@ -15,7 +15,8 @@ class Pizza {
     }
 
     public void addTopping(Topping topping) {
-        this.toppings.add(topping);
+        if (this.getToppings().size() < this.getNumOfToppings())
+            this.toppings.add(topping);
     }
 
     private Dough getDough() {

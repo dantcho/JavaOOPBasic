@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Dough {
-    private List<DoughModifiers> modifiers;
+    //private List<DoughModifiers> modifiers;
+
     private int weight;
+    FlourType flourType;
+    BakingTechnique bakingTechnique;
 
     public int getWeight() {
         return this.weight;
@@ -17,49 +20,43 @@ class Dough {
         } else this.weight = weight;
     }
 
-    public Dough(int weight, String... modifiers) {
-        this.modifiers = new ArrayList<>();
+    public Dough(int weight, String flourType, String bakingMethod) {
+        this.addFlour(flourType);
+        this.addBakingMethod(bakingMethod);
         this.setWeight(weight);
-        this.addModifiers(modifiers);
     }
+
 
     public double calculateCalories() {
         double calories = 1;
-        for (DoughModifiers modifier : getModifiers()) {
-            switch (modifier) {
-                case WHITE:
-                    calories *= 1.5;
-                    break;
-                case WHOLEGRAIN:
-                    calories *= 1;
-                    break;
-                case CRISPY:
-                    calories *= 0.9;
-                    break;
-                case CHEWY:
-                    calories *= 1.1;
-                    break;
-                case HOMEMADE:
-                    calories *= 1;
-                    break;
-            }
+        switch (this.flourType) {
+            case WHITE:
+                calories *= 1.5;
+                break;
+            case WHOLEGRAIN:
+                calories *= 1;
+                break;
+        }
+        switch (this.bakingTechnique) {
+            case CRISPY:
+                calories *= 0.9;
+                break;
+            case CHEWY:
+                calories *= 1.1;
+                break;
+            case HOMEMADE:
+                calories *= 1;
+                break;
         }
         calories *= 2 * this.getWeight(); //Calories from dough weight
         return calories;
     }
+    private void addBakingMethod(String bakingTechnique) {
 
-
-    private List<DoughModifiers> getModifiers() {
-        return this.modifiers;
+        this.bakingTechnique = BakingTechnique.lookup(bakingTechnique);
     }
 
-    private void addModifier(DoughModifiers modifier) {
-        this.modifiers.add(modifier);
-    }
-    private void addModifiers(String[] modifiers) {
-        for (String modifier : modifiers) {
-            DoughModifiers m = DoughModifiers.lookup(modifier);
-            this.addModifier(m);
-        }
+    private void addFlour(String flourType) {
+        this.flourType = FlourType.lookup(flourType);
     }
 }

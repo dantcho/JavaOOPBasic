@@ -12,17 +12,12 @@ public class Main {
         while (!input.equals("END")) {
             String[] token = input.split("\\s+");
             String command = token[0];
-
-            int modLen = token.length - 2;
-            String[] modifiers = new String[modLen];
-            for (int i = 0; i < modLen; i++) {
-                modifiers[i] = token[i + 1];
-            }
             int weightOrCount = Integer.parseInt(token[token.length - 1]);
             switch (command) {
                 case "Pizza":
                     try {
-                        pizza = new Pizza(modifiers[0], weightOrCount);
+                        String name = token[1];
+                        pizza = new Pizza(name, weightOrCount);
                     } catch (IllegalArgumentException ex) {
                         System.out.println(ex.getMessage());
                         return;
@@ -31,27 +26,36 @@ public class Main {
                 case "Dough":
                     Dough dough = null;
                     try {
-                        dough = new Dough(weightOrCount, modifiers);
+                        String flourType = token[1];
+                        String bakingMethod = token[2];
+                        dough = new Dough(weightOrCount, flourType, bakingMethod);
                     } catch (IllegalArgumentException ex) {
                         System.out.println(ex.getMessage());
                         return;
                     }
-                    pizza.setDough(dough);
+                    if (pizza != null)
+                        pizza.setDough(dough);
+                    else System.out.printf("%.2f\n", dough.calculateCalories());
                     break;
                 case "Topping":
                     Topping topping = null;
                     try {
-                        topping = new Topping(modifiers[0], weightOrCount);
+                        String top = token[1];
+                        topping = new Topping(top, weightOrCount);
                     } catch (IllegalArgumentException ex) {
                         System.out.println(ex.getMessage());
                         return;
                     }
-                    pizza.addTopping(topping);
+                    if (pizza != null)
+                        pizza.addTopping(topping);
+                    else System.out.printf("%.2f\n", topping.calculateCalories());
                     break;
             }
             input = reader.readLine();
         }//end while
-        System.out.println(pizza.getName()+" - "+pizza.calculateCalories());
+        if (pizza != null) {
+            System.out.printf("%s - %.2f\n", pizza.getName(), pizza.calculateCalories());
+        }
 
     }
 }
