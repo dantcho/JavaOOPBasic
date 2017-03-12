@@ -1,6 +1,6 @@
 package _04_ShoppingSpree;
 
-public class Product {
+ class Product {
     private String name;
     private double cost;
 

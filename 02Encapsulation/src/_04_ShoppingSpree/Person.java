@@ -3,7 +3,7 @@ package _04_ShoppingSpree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person {
+ class Person {
     private String name;
     private double money;
     private List<Product> bag;
